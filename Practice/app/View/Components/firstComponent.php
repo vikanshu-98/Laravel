@@ -15,13 +15,17 @@ class firstComponent extends Component
     public $name; 
     public $label; 
     public $value;
-    public function __construct($type,$name,$label,$value=0)
+    public $fieldvalue;
+    public $dataGender;
+    public function __construct($type,$name,$label,$value=null,$gender='')
     {
         $this->type = $type;
         $this->name = $name;
         $this->label = $label;
+        
         $this->value = $value;
-
+        $this->dataGender = $gender; 
+        // $this->fieldvalue = $fieldvalue;
     }
 
     /**

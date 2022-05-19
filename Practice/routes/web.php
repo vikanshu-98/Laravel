@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\commonController;
 use App\Http\Controllers\singleActionController;
 use App\Http\Controllers\resourceController;
+use App\Models\customer;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,14 +27,21 @@ Route::get('/about-us',[commonController::class,'about']);
 Route::get('/invoke',singleActionController::class);
 Route::resource('/resource',resourceController::class);
 
-
-
-Route::get('/register',function(){
-    return view('register');
+Route::get('/register',function(){ 
+    $tittle = "Registration Form";
+    $action  = "/formData";
+    $data='';
+    $dataArray = compact('data','tittle','action');
+    return view('register')->with($dataArray);
 });
-
-Route::post('/formData',[commonController::class,'register']);
-
+Route::get('/customer-list',[commonController::class,'customerList']); 
+Route::post('/formData',[commonController::class,'register']); 
+Route::post('//edit-form-submit/{id}',[commonController::class,'editFormDataSave']); 
+Route::get('/edit-data/{id}',[commonController::class,'editData']);
+Route::get('/delete/{id}',[commonController::class,'deleteData']);
+Route::get('/move-trash',[commonController::class,'moveTrash']);
+Route::get('/restore/{id}',[commonController::class,'Restore']);
+Route::get('/permanentdelete/{id}',[commonController::class,'permanentdelete']);
 
 
 
