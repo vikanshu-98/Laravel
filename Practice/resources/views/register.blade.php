@@ -15,11 +15,17 @@
         <div class="col-sm-10 col-12 mx-auto mt-5">
           <form action="/formData" method="post">
           @csrf
-            <div class="form-group">
-             <label for="">Enter yout Name</label>
-              <input type="text" name="fName" class="form-control" placeholder="" aria-describedby="helpId" value={{old('cfName')}} >
+          @php
+            $v = 1
+          @endphp
+          <x-first-component type="text" name="fName" label="Enter yout Name" :value="$v" />
+          <x-first-component type="email" name="email" label="Enter your Email"/>
+          <x-first-component type="password" name="namePassword" label="Enter yout password"/>
+            {{--  <div class="form-group">
+              <label for="">Enter your Name</label>
+              <input type="text" class="form-control" name="fName" aria-describedby="emailHelpId" placeholder="">
               <span class="text-danger">@error('fName') {{ $message }}@enderror</span>
-            </div>
+            </div> 
             <div class="form-group">
               <label for="">Enter your Email</label>
               <input type="email" class="form-control" name="email" aria-describedby="emailHelpId" placeholder="">
@@ -29,7 +35,7 @@
               <label for="">Enter yout password</label>
               <input type="password" class="form-control" name="namePassword" placeholder="">
                 <span class="text-danger">@error('namePassword') {{ $message }}@enderror</span>
-            </div>
+            </div>  --}}
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
