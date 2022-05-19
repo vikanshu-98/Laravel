@@ -93,4 +93,17 @@ class commonController extends Controller
         $customer  =customer::withTrashed()->find($id)->forceDelete(); 
         return redirect('move-trash');
     }
+
+    public function addSession(Request $req){
+        // $req->session()->put('user_id',1);
+        // $req->session()->put('email','a@gmail.com');
+        session(['user_id'=>1,'user_email'=>'a@gmial.com']);
+        session()->flash('success',true);
+       return  redirect('getSession');
+    }
+    public function deleteSession(Request $req){
+        // $req->session()->flush();
+        session()->forget(['user_id','user_email']);
+       return  redirect('getSession');
+    }
 } 

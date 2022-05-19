@@ -42,9 +42,13 @@ Route::get('/delete/{id}',[commonController::class,'deleteData']);
 Route::get('/move-trash',[commonController::class,'moveTrash']);
 Route::get('/restore/{id}',[commonController::class,'Restore']);
 Route::get('/permanentdelete/{id}',[commonController::class,'permanentdelete']);
+Route::get('/getSession',function(){
+    return session()->all();
+});
 
 
-
+Route::get('/add-session',[commonController::class,'addSession']);
+Route::get('/delete-session',[commonController::class,'deleteSession']);
 
 // Route::get('/', function () {
 //     return view('home');
