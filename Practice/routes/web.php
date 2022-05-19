@@ -28,6 +28,11 @@ Route::resource('/resource',resourceController::class);
 
 
 
+Route::get('/register',function(){
+    return view('register');
+});
+
+Route::post('/formData',[commonController::class,'register']);
 
 
 
@@ -40,10 +45,10 @@ Route::resource('/resource',resourceController::class);
 //     return view('about');
 // });
 
-Route::get('/{name}', function ($name) {
-    $array = compact('name');
-    return view('second')->with($array);
-});
+// Route::get('/{name}', function ($name) {
+//     $array = compact('name');
+//     return view('second')->with($array);
+// });
 
 Route::get('/first/{name}/{address?}', function ($name, $address = null) {
     $head = "<h1>This is the heading</h1>";
