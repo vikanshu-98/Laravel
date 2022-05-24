@@ -6,7 +6,18 @@
 @endphp  --}}
 <a name="" id="" class="btn btn-primary" href="{{url('/move-trash')}}" role="button">Go To Delete</a>
 <a name="" id="" class="btn btn-primary" href="{{url('/customer-list')}}" role="button">Go to List</a>
-<table class="table mt-5" >
+<div class="row mt-4">
+    <div class="col-md-12">
+        <form action="/searching" method="POST">
+            @csrf
+            <div class="form-group"> 
+                <input type="text" class="form-control" name="search" id="" aria-describedby="emailHelpId" placeholder="Type to search"> 
+            </div>
+            <button class="btn btn-success">Search</button>
+        </form>
+    </div> 
+</div>
+    <table class="table mt-5" >
     <thead>
         <tr>
             <th>Name</th>

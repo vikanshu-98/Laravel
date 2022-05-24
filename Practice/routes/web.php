@@ -47,6 +47,11 @@ Route::get('/getSession',function(){
 });
 
 
+// searching
+Route::post('/searching',[commonController::class,'Searching']);
+
+
+
 Route::get('/add-session',[commonController::class,'addSession']);
 Route::get('/delete-session',[commonController::class,'deleteSession']);
 

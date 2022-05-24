@@ -106,4 +106,13 @@ class commonController extends Controller
         session()->forget(['user_id','user_email']);
        return  redirect('getSession');
     }
+
+    public function Searching(Request $request){
+        $searchQuery = $request['search']??"";
+
+        $customer = new customer();
+        $data=  $customer->where('name','LIKE',"%$searchQuery%")->orWhere('email',"LIKE","%$searchQuery%")->get();
+        $dataArray=compact('data');
+        return \view('customer')->with($dataArray);
+    }
 } 
