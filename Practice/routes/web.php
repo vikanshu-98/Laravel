@@ -35,7 +35,7 @@ Route::get('/register',function(){
     $dataArray = compact('data','tittle','action');
     return view('register')->with($dataArray);
 });
-Route::get('/customer-list',[commonController::class,'customerList']); 
+Route::get('/customer-list',[commonController::class,'customerList'])->middleware(['guard']); 
 Route::post('/formData',[commonController::class,'register']); 
 Route::post('//edit-form-submit/{id}',[commonController::class,'editFormDataSave']); 
 Route::get('/edit-data/{id}',[commonController::class,'editData']);
@@ -53,8 +53,7 @@ Route::post('/searching',[commonController::class,'Searching']);
 
 
 
-Route::get('/add-session',[commonController::class,'addSession']);
-Route::get('/delete-session',[commonController::class,'deleteSession']);
+ 
 
 // Route::get('/', function () {
 //     return view('home');
@@ -88,3 +87,21 @@ Route::get('/one-many',function(){
  Route::get('/one-many-groups',function(){ 
     return groups::with('members')->get();
  });
+
+ Route::get('/login',function(){
+    session(['user_id'=>1]);
+});
+ 
+
+Route::get('/noaccess',function(){
+    return "you are allowed to access this page";
+});
+
+
+// session
+
+Route::get('/login',[commonController::class,'addSession']);
+Route::get('/logout',[commonController::class,'deleteSession']);
+Route::get('/getSession',function(){
+    return session()->all();
+});
