@@ -42,7 +42,7 @@ class commonController extends Controller
 
     public function customerList(){
         $customer  = new customer();
-        $data = $customer->all();
+        $data = $customer->paginate(15);
         $dataArray=compact('data');
         return \view('customer')->with($dataArray);
     }
