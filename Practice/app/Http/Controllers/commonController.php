@@ -115,4 +115,5 @@ class commonController extends Controller
         $dataArray=compact('data');
         return \view('customer')->with($dataArray);
     }
+    
 } 

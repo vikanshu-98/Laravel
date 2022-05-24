@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\commonController;
 use App\Http\Controllers\singleActionController;
 use App\Http\Controllers\resourceController;
-use App\Models\customer;
+use App\Models\groups;
+use App\Models\members; 
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,17 @@ Route::get('/first/{name}/{address?}', function ($name, $address = null) {
 
     return view('first')->with($array);
 });
+
+
+
+
+
+Route::get('/one-one',function(){ 
+   return members::with('getGroup')->get();
+});
+Route::get('/one-many',function(){ 
+    return members::with('Groups')->get();
+ });
+ Route::get('/one-many-groups',function(){ 
+    return groups::with('members')->get();
+ });
