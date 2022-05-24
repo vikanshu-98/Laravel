@@ -5,7 +5,8 @@ use App\Http\Controllers\commonController;
 use App\Http\Controllers\singleActionController;
 use App\Http\Controllers\resourceController;
 use App\Models\groups;
-use App\Models\members; 
+use App\Models\members;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,4 +105,13 @@ Route::get('/login',[commonController::class,'addSession']);
 Route::get('/logout',[commonController::class,'deleteSession']);
 Route::get('/getSession',function(){
     return session()->all();
+});
+
+
+
+//localisatiom
+
+Route::get('/localization/{lang}',function($lang){
+    App::setlocale($lang);
+    return view('localization');
 });
