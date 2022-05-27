@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\commonController;
 use App\Http\Controllers\singleActionController;
 use App\Http\Controllers\resourceController;
+use App\Http\Controllers\users\userController;
 use App\Models\groups;
 use App\Models\members;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,3 +117,20 @@ Route::get('/localization/{lang}',function($lang){
     App::setlocale($lang);
     return view('localization');
 });
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('user')->name('user')->group(function(){
+    Route::middleware(['guest:web'])->group(function(){
+        Route::view('/login','dashboard.user.login')->name('login');
+        Route::view('/register','dashboard.user.register')->name('register');
+       Route::post('/create',[userController::class,'createUser'])->name('create');
+       Route::post('/logined',[userController::class,'LogedIn'])->name('logedIn');
+        
+    });
+    Route::middleware(['auth:web'])->group(function(){
+        Route::view('home','dashboard.user.home');
+        Route::post('/logout',[userController::class,'logout']);
+    });
+}); 
