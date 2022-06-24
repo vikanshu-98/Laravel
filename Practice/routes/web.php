@@ -1,14 +1,22 @@
 <?php
 
+use App\Events\someOneCheckedYourProfile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\commonController;
 use App\Http\Controllers\singleActionController;
 use App\Http\Controllers\resourceController;
 use App\Http\Controllers\users\userController;
+use App\Jobs\RegisteredUsers;
+use App\Mail\FirstMailable;
+use App\Mail\secondMailer;
 use App\Models\groups;
 use App\Models\members;
+use App\Models\User;
+use App\Notifications\FirstNotification;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -134,3 +142,44 @@ Route::prefix('user')->name('user')->group(function(){
         Route::post('/logout',[userController::class,'logout']);
     });
 }); 
+
+
+Route::get('/',function(\App\Services\FirstServices $firstServices){
+    dump($firstServices->returnArray());
+    dd(app());
+});
+
+Route::get('/contract',function(Illuminate\Contracts\Cache\Factory $cache){
+    
+    // $cache->put('d','f');
+echo $cache->get('d');
+});
+
+Route::get('/mail',function(){
+
+    // Mail::send([],[],function($message){
+    //     $message->to('vikanshu.chauhan@novoinvent.com','first email')
+    //     ->subject('testing mail')->setBody('Hi mail');
+    // });
+    Mail::to('vikanshu@novo.com')->send(new secondMailer());
+    echo "sent";
+});
+
+
+Route::get('/mail',function(){
+
+    // Mail::send([],[],function($message){
+    //     $message->to('vikanshu.chauhan@novoinvent.com','first email')
+    //     ->subject('testing mail')->setBody('Hi mail');
+    // });
+
+    // dispatch(function(){ 
+    // })->delay(now()->addSeconds(10)); 
+    // RegisteredUsers::dispatch()->delay(now()->addSeconds(20));
+    $data=User::inRandomOrder()->first();
+
+    print_r($data->email);
+    someOneCheckedYourProfile::dispatch($data);
+    $data->notify(new FirstNotification());
+    echo "sent" . $data->email;
+});
