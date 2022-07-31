@@ -137,10 +137,10 @@ Route::prefix('user')->name('user')->group(function(){
        Route::post('/logined',[userController::class,'LogedIn'])->name('logedIn');
         
     });
-    Route::middleware(['auth:web'])->group(function(){
-        Route::view('home','dashboard.user.home');
-        Route::post('/logout',[userController::class,'logout']);
-    });
+    // Route::middleware(['auth:web'])->group(function(){
+    //     Route::view('home','dashboard.user.home');
+    //    // Route::post('/logout',[userController::class,'logout']);
+    // });
 }); 
 
 
