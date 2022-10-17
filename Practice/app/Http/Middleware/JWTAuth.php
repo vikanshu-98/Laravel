@@ -6,6 +6,8 @@ use App\Exceptions\AppException;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
@@ -23,27 +25,35 @@ class JWTAuth
     {
         try{ 
             $user = FacadesJWTAuth::parseToken()->authenticate();
-        }catch(Exception $e){
-            if($e instanceof TokenExpiredException){ 
-               // return response()->json(['d'=>FacadesJWTAuth::refresh()]);
-
+        }catch(TokenExpiredException $e){
+            try
+            {  
                 return response()->data([
-                    'token'=>FacadesJWTAuth::parseToken()->refresh(),
-                    'token_type'=>'bearer',
-                    'expires_in'=>auth()->factory()->getTTL()*60
-                ],'Expired');
-             // throw new AppException('Token Expired',401); 
-             
-            
+                        'access_token'=>  FacadesJWTAuth::parseToken()->refresh(),
+                        'token_type'=>'bearer',
+                        'expires_in'=>auth()->factory()->getTTL()*60
+                    ],'Expired',2000);
+                 
             }
-            else if($e instanceof TokenInvalidException){ 
-                throw new AppException('Token Invalid',401);
+            catch(TokenExpiredException $e){ 
+                return response()->success('Token has been Expired.kindly login again',4001,false,401);
             }
-            else{
-                return response()->json(['success'=>false,'message'=>'Token Not Found'],401);
+            catch(TokenBlacklistedException $e){  
+                return response()->success('Token has been BlackListed.kindly login again',4001,false,401);
             }
+            catch(TokenInvalidException $e){ 
+                return response()->success('Invalid Token.',4001,false,401);
+            }
+        }
+        catch(TokenInvalidException $e){ 
+            return response()->success('Invalid Token.',4001,false,401);
+        }catch(TokenBlacklistedException $e){  
+            return response()->success('Token has been BlackListed.kindly login again',4001,false,401);
+        }
+        catch(JWTException $e){
+           
+            return response()->success('Token Not found.kindly login again',4002,false,401);
         } 
-
         return $next($request);
     }
 }

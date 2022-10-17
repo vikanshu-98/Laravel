@@ -1,13 +1,13 @@
 <?php
 namespace App\Macros;
 
-use Exception;
+use Exception; 
 
 class ResponseMacros{
 
    public function success(){
-        return function(string $message="success",int $code=1000){
-            return $this->json(['success'=>true,'code'=>$code,'message'=>$message]);
+        return function(string $message="success",int $code=1000,$success=true,int $httpcode=200){
+            return $this->json(['success'=>$success,'code'=>$code,'message'=>$message],$httpcode);
         };
     }
 

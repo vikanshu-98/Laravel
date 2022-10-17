@@ -34,6 +34,15 @@ use Illuminate\Support\Facades\Mail;
 
 
 
+Route::get('/provider',function(\App\Services\FirstServices $firstServices){
+    dump($firstServices->returnArray());
+    dd(app());
+});
+
+// Route::get('/provider',function(){
+//     dd('sdsdsd');
+// });
+
 Route::get('/',[commonController::class,'home']);
 Route::get('/about-us',[commonController::class,'about']);
 Route::get('/invoke',singleActionController::class);
@@ -144,11 +153,7 @@ Route::prefix('user')->name('user')->group(function(){
 }); 
 
 
-Route::get('/',function(\App\Services\FirstServices $firstServices){
-    dump($firstServices->returnArray());
-    dd(app());
-});
-
+ 
 Route::get('/contract',function(Illuminate\Contracts\Cache\Factory $cache){
     
     // $cache->put('d','f');
