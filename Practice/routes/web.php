@@ -17,7 +17,8 @@ use App\Models\members;
 use App\Models\Page;
 use App\Models\User;
 use App\Notifications\FirstNotification;
-use App\Services\FirstServices; 
+use App\Services\FirstServices;
+use App\Services\OopsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -290,4 +291,9 @@ Route::get('/move',function(Request $request){
  //Storage::copy('avatar','UploadedDatas');
 });
 
+
+Route::get('/oopsConcept',function(OopsService $oops){
+    $oops->getMultiply(2,3);
+    dd(app());
+});
 
