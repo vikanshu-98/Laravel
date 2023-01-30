@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\someOneCheckedYourProfile;
+use App\Events\SomeOneCheckYourAccount;
 use App\Listeners\profileListener;
+use App\Listeners\SomeOneCheckYourAccountListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         someOneCheckedYourProfile::class=>[
             profileListener::class
+        ],
+        SomeOneCheckYourAccount::class=>[
+            SomeOneCheckYourAccountListener::class
         ]
     ];
 

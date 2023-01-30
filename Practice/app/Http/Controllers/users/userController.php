@@ -13,7 +13,7 @@ class userController extends Controller
 {
 
     public function __construct(){ 
-        $this->middleware('JWTAuth',['except'=>['LoggedIn']]);
+        $this->middleware('JWTAuth',['except'=>['LoggedIn','registerUser']]);
     } 
     //
     // function createUser(Request $request){

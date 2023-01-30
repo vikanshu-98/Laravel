@@ -20,4 +20,8 @@ class members extends Model
     function Groups(){
         return $this->hasMany('App\Models\groups','group_id','group_id');
     }
+
+    function oneToMany(){
+        return $this->belongsToMany(groups::class,'groups','group_id','group_id');
+    }
 }
