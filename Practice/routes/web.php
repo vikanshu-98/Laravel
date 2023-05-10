@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\commonController;
 use App\Http\Controllers\singleActionController;
 use App\Http\Controllers\resourceController;
+use App\Http\Controllers\UserControllerExport;
 use App\Http\Controllers\users\userController;
 use App\Jobs\MailCheckQueue;
 use App\Jobs\RegisteredUsers;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -85,6 +87,10 @@ Route::get('/getSession',function(){
 
 // searching
 Route::post('/searching',[commonController::class,'Searching']);
+Route::get('/uuid',function(){
+echo Str::uuid();
+
+});
 
 
 
@@ -229,7 +235,7 @@ Route::get('eventFire',function(){
     SomeOneCheckYourAccount::dispatch($user);
 });
  
-Route::get('/',function(HttpRequest $request){
+Route::get('/',function(Request $request){
  dd($request->userName());
 });
 Route::get('/getPageWithComment',function(){
@@ -293,7 +299,14 @@ Route::get('/move',function(Request $request){
 
 
 Route::get('/oopsConcept',function(OopsService $oops){
-    $oops->getMultiply(2,3);
-    dd(app());
+    $oops->myNmae();
+    OopsService::getSum(1,2);
+    // $oops->getMultiply(2,3);
+    // dd(app());
 });
+
+Route::get('/export',function(){
+return view('export');
+});
+Route::get('/exportUser',[UserControllerExport::class,'exportUser']);
 
